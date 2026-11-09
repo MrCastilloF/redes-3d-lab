@@ -122,6 +122,7 @@ Ambos repositorios existen y están publicados en la cuenta `MrCastilloF`:
 |---|---|---|---|
 | `explorador-redes-3d` | https://mrcastillof.github.io/explorador-redes-3d/ | GitHub Actions | ✅ HTTP 200 · sha256 del HTML idéntico al build local |
 | `lab-redes-3d` | https://mrcastillof.github.io/lab-redes-3d/ | GitHub Actions | ✅ HTTP 200 · sha256 del HTML idéntico al build local |
+| `redes-3d-lab` | — (no es un sitio) | — | ✅ público, con CI que ejecuta build + 4 suites en cada push |
 
 El repositorio del skill puede publicarse igual (sin Pages, porque no es un sitio). Pasos y permisos
 necesarios en `04-despliegue-github-pages.md` §1.

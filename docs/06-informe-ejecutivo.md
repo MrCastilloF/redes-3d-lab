@@ -17,6 +17,7 @@ y publica:
 | Skill instalable `redes-3d-lab` | ✅ instalado | `C:\Users\ecastillo\.dsh\skills\redes-3d-lab` (33 archivos, 349 KB) y visible en el catálogo de la sesión |
 | Pruebas automatizadas | ✅ 58 comprobaciones | 34 códec + 10 ingesta + 14 humo en navegador |
 | Documentación | ✅ 8 documentos + README + SKILL.md | `docs/00…07` |
+| Repositorio del skill | ✅ publicado | https://github.com/MrCastilloF/redes-3d-lab · CI "Verificar skill" (build + códec + ingesta + estructura + humo) en verde |
 | Publicación en GitHub Pages | ✅ **publicada y verificada** | https://mrcastillof.github.io/explorador-redes-3d/ y https://mrcastillof.github.io/lab-redes-3d/ · Pages en modo GitHub Actions · sha256 del HTML servido idéntico al local |
 
 Las dos aplicaciones son **un solo archivo**, no hacen **ninguna petición de red** y funcionan abriendo el
