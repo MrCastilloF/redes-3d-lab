@@ -106,6 +106,8 @@ for (const clave of elegidos) {
   if (fs.existsSync(readme)) fs.copyFileSync(readme, path.join(dirApp, "README.md"));
   const licencia = path.join(ASSETS, "deploy", "LICENSE");
   if (fs.existsSync(licencia)) fs.copyFileSync(licencia, path.join(dirApp, "LICENSE"));
+  const aviso = path.join(ASSETS, "deploy", "NOTICE");
+  if (fs.existsSync(aviso)) fs.copyFileSync(aviso, path.join(dirApp, "NOTICE"));
 
   const kb = (fs.statSync(path.join(dirApp, "index.html")).size / 1024).toFixed(1);
   const sha = crypto.createHash("sha256").update(html).digest("hex").slice(0, 16);

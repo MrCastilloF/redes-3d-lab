@@ -19,9 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-
----
-
-El modelo de datos de red (escenarios, dispositivos, VLANs, protocolos y glosario
-del bloque DATOS) y los textos didácticos asociados pertenecen a la
-labs_redes_test y se reutilizan aquí con su contenido original.

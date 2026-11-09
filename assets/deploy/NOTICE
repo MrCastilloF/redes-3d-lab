@@ -1,0 +1,8 @@
+AVISO SOBRE EL CONTENIDO
+
+El modelo de datos de red del Explorador (escenarios, dispositivos, VLANs,
+protocolos y glosario del bloque DATOS) y los textos didacticos asociados
+pertenecen a la labs_redes_test y se reutilizan con su contenido original.
+
+El codigo del motor 3D, los codecs, los parsers, la interfaz y las pruebas son
+obra de MrCastilloF bajo licencia MIT (ver LICENSE).
