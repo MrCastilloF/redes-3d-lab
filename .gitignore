@@ -1,0 +1,8 @@
+# Artefactos generados (las aplicaciones viven en sus propios repositorios)
+apps/
+node_modules/
+
+# Sistema
+.DS_Store
+Thumbs.db
+*.log

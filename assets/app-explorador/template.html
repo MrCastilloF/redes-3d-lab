@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#05080f">
+<title>Explorador de Redes 3D · labs_redes_test</title>
+<meta name="description" content="Explorador de redes en 3D: topología interactiva, direccionamiento IP, protocolos y simulación de tráfico. labs_redes_test.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2338bdf8'/%3E%3Cpath d='M8 22h16M11 22v-6h10v6M16 16v-4m-3 0h6' stroke='%2304121e' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>/* @@INLINE:theme/base.css@@ */</style>
+<style>/* @@INLINE:app-explorador/app1.css@@ */</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============================================================== barra superior -->
+  <header class="barra">
+    <div class="marca">
+      <div class="marca-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 18h18M6 18v-6h12v6M12 12V7m-3 0h6"/>
+        </svg>
+      </div>
+      <div class="marca-txt">
+        <h1 class="marca-titulo">Explorador de Redes <span style="color:var(--acento)">3D</span></h1>
+        <div class="marca-sub">labs_redes_test · topología, protocolos y simulación</div>
+      </div>
+    </div>
+
+    <nav class="pestanas" role="tablist" aria-label="Secciones de la aplicación">
+      <button class="pestana" role="tab" id="tab-topologia" aria-controls="vista-topologia" aria-selected="true">Topología</button>
+      <button class="pestana" role="tab" id="tab-direccionamiento" aria-controls="vista-direccionamiento" aria-selected="false">Direccionamiento</button>
+      <button class="pestana" role="tab" id="tab-protocolos" aria-controls="vista-protocolos" aria-selected="false">Protocolos</button>
+      <button class="pestana" role="tab" id="tab-simulacion" aria-controls="vista-simulacion" aria-selected="false">Simulación</button>
+      <button class="pestana" role="tab" id="tab-glosario" aria-controls="vista-glosario" aria-selected="false">Glosario</button>
+    </nav>
+
+    <div class="barra-fin">
+      <label class="solo-lector" for="sel-escenario">Escenario de red</label>
+      <select class="campo" id="sel-escenario" title="Escenario de red"></select>
+      <button class="btn btn--icono" id="btn-tema" aria-pressed="false" title="Cambiar de tema" aria-label="Cambiar de tema">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================================================== topología 3D -->
+    <section class="vista vista--topologia" id="vista-topologia" role="tabpanel" aria-labelledby="tab-topologia">
+      <div class="lienzo">
+        <svg id="topologia" role="application" aria-label="Topología de red en 3D interactiva. Usa las flechas para girar la cámara y el signo más o menos para acercar." tabindex="0">
+          <defs>
+            <linearGradient id="gCartel" x1="0" y1="0" x2="0.55" y2="1">
+              <stop offset="0" class="st1"/>
+              <stop offset="1" class="st2"/>
+            </linearGradient>
+            <radialGradient id="gSombra">
+              <stop offset="0" stop-color="#000" stop-opacity="0.62"/>
+              <stop offset="1" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="gHalos">
+              <stop offset="0" class="stHalo"/>
+              <stop offset="1" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="fGlow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="3.4"/>
+            </filter>
+          </defs>
+        </svg>
+
+        <div class="hud">
+          <div class="titulo-flotante">
+            <h2 id="hud-titulo">Topología 3D del escenario</h2>
+            <p id="hud-desc">Arrastra para orbitar, rueda para acercar, clic en un dispositivo para inspeccionarlo.</p>
+            <div class="kpis" id="hud-kpis"></div>
+            <p class="pista">Arrastra para orbitar · rueda para acercar · <span class="kbd">Mayús</span>+arrastrar para desplazar · clic en un dispositivo abre su ficha</p>
+          </div>
+
+          <div class="hud-pie">
+            <div class="leyenda" id="leyenda" aria-label="Leyenda de VLANs"></div>
+            <div class="controles">
+              <div class="seg" role="group" aria-label="Punto de vista">
+                <button data-preset="iso" aria-pressed="true" title="Vista isométrica">Iso</button>
+                <button data-preset="frontal" aria-pressed="false" title="Vista frontal">Frente</button>
+                <button data-preset="cenital" aria-pressed="false" title="Vista cenital">Cenital</button>
+              </div>
+              <button class="btn" id="btn-ajustar" title="Encuadrar toda la topología">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 15v5h-5M20 9V4h-5M4 15v5h5"/></svg>
+                Ajustar
+              </button>
+              <button class="btn" id="btn-girar" aria-pressed="false" title="Rotación automática de la cámara">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>
+                Girar
+              </button>
+              <button class="btn" id="btn-trafico" aria-pressed="true" title="Tráfico animado en los enlaces">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12h16M14 6l6 6-6 6"/></svg>
+                Tráfico
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <aside class="inspector" id="inspector" aria-live="polite" aria-label="Panel de detalles"></aside>
+    </section>
+
+    <!-- ========================================================= direccionamiento -->
+    <section class="vista" id="vista-direccionamiento" role="tabpanel" aria-labelledby="tab-direccionamiento" hidden>
+      <div class="seccion">
+        <div class="seccion-cab">
+          <div>
+            <h2>Direccionamiento IP</h2>
+            <p id="dir-desc">Esquema de VLANs, rangos DHCP y direcciones de cada dispositivo del escenario.</p>
+          </div>
+          <div class="chips" id="dir-chips"></div>
+        </div>
+
+        <div class="rejilla">
+          <div class="tarjeta">
+            <h3>VLANs y subredes</h3>
+            <div class="tabla-envoltura">
+              <table class="tabla">
+                <thead>
+                  <tr><th>VLAN</th><th>Nombre</th><th>Subred</th><th>Gateway</th><th>DHCP</th><th>Uso</th></tr>
+                </thead>
+                <tbody id="tabla-vlans"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tarjeta">
+            <h3>Dispositivos con IP</h3>
+            <div class="tabla-envoltura">
+              <table class="tabla">
+                <thead>
+                  <tr><th>Dispositivo</th><th>IP</th><th>Máscara</th><th>Red</th><th>VLAN</th><th>MAC</th></tr>
+                </thead>
+                <tbody id="tabla-equipos"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="rejilla">
+          <div class="tarjeta">
+            <h3>Calculadora de subred</h3>
+            <div class="form-fila">
+              <label>Dirección IP
+                <input class="campo" id="calc-ip" value="10.10.30.21" inputmode="decimal" spellcheck="false">
+              </label>
+              <label>Prefijo
+                <select class="campo" id="calc-mask"></select>
+              </label>
+              <button class="btn btn--acento" id="btn-calcular">Calcular</button>
+            </div>
+            <div id="calc-resultado"></div>
+          </div>
+
+          <div class="tarjeta" id="caja-notas">
+            <h3>Notas del diseño</h3>
+            <div id="notas-dir"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== protocolos -->
+    <section class="vista vista--protocolos" id="vista-protocolos" role="tabpanel" aria-labelledby="tab-protocolos" hidden>
+      <div class="seccion">
+        <div class="seccion-cab">
+          <div>
+            <h2>Protocolos en juego</h2>
+            <p>Selecciona un protocolo para ver sus capas, su función y resaltar los enlaces que lo transportan.</p>
+          </div>
+        </div>
+        <div class="rejilla rejilla--protos">
+          <div class="tarjeta">
+            <h3>Catálogo</h3>
+            <div class="lista-protos" id="lista-protocolos"></div>
+          </div>
+          <div class="tarjeta" id="proto-detalle">
+            <h3>Detalle</h3>
+            <div class="vacio">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7h16M4 12h16M4 17h10"/></svg>
+              <div>Elige un protocolo del catálogo para ver su pila de capas, su analogía y dónde viaja en esta red.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== simulación -->
+    <section class="vista" id="vista-simulacion" role="tabpanel" aria-labelledby="tab-simulacion" hidden>
+      <div class="seccion">
+        <div class="seccion-cab">
+          <div>
+            <h2>Simulación de tráfico</h2>
+            <p>Traza el camino real de un paquete por la topología y míralo viajar por los enlaces del escenario.</p>
+          </div>
+        </div>
+
+        <div class="tarjeta">
+          <h3>Parámetros del envío</h3>
+          <div class="form-fila">
+            <label>Origen
+              <select class="campo" id="sim-origen"></select>
+            </label>
+            <label>Destino
+              <select class="campo" id="sim-destino"></select>
+            </label>
+            <label>Tipo de tráfico
+              <select class="campo" id="sim-proto">
+                <option value="icmp">ICMP (ping)</option>
+                <option value="dns">DNS (resolución de nombre)</option>
+                <option value="http">HTTP/HTTPS (web)</option>
+                <option value="dhcp">DHCP (petición de IP)</option>
+              </select>
+            </label>
+            <button class="btn btn--acento" id="btn-trazar">Trazar ruta</button>
+            <button class="btn" id="btn-detener">Detener</button>
+          </div>
+        </div>
+
+        <div class="tarjeta">
+          <h3>Camino del paquete</h3>
+          <div class="ruta" id="sim-ruta"><span class="vacio" style="padding:4px">Aún no se ha trazado ninguna ruta.</span></div>
+          <div id="sim-detalle" style="margin-top:12px"></div>
+        </div>
+
+        <div class="tarjeta tarjeta--plana">
+          <h3>Cómo leerlo</h3>
+          <p style="margin:0;font-size:12.5px;color:var(--texto-2);line-height:1.6">
+            La ruta se calcula con un recorrido en anchura (BFS) sobre los enlaces del escenario, igual que un
+            conmutador aprende la ruta más corta. Cada salto muestra la capa en la que trabaja el dispositivo y el
+            protocolo que reenvía la trama. La animación sobre la topología 3D usa los mismos enlaces que el cálculo.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================ glosario -->
+    <section class="vista" id="vista-glosario" role="tabpanel" aria-labelledby="tab-glosario" hidden>
+      <div class="seccion">
+        <div class="seccion-cab">
+          <div>
+            <h2>Glosario</h2>
+            <p>Términos que aparecen en el escenario, agrupados por categoría.</p>
+          </div>
+          <input class="campo" id="glosario-buscar" placeholder="Buscar término…" aria-label="Buscar en el glosario">
+        </div>
+        <div class="rejilla" id="glosario-lista"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<noscript>
+  <div style="padding:24px;font-family:system-ui">Esta aplicación necesita JavaScript. Es un archivo único, sin backend: puedes abrirlo desde el disco o desde GitHub Pages.</div>
+</noscript>
+
+<script>/* @@INLINE:core/motor3d.js@@ */</script>
+<script>/* @@INLINE:core/ui.js@@ */</script>
+<script>/* @@INLINE:app-explorador/datos.js@@ */</script>
+<script>/* @@INLINE:app-explorador/app.js@@ */</script>
+</body>
+</html>

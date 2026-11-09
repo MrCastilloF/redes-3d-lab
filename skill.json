@@ -1,0 +1,67 @@
+{
+  "name": "redes-3d-lab",
+  "version": "1.0.0",
+  "description": "Aplicaciones web de redes en 3D autocontenidas: motor 3D en SVG, códecs DEFLATE/ZIP propios, parsers de .drawio/.docx/.pdf, pruebas automatizadas y despliegue estático en GitHub Pages.",
+  "author": "MrCastilloF",
+  "license": "MIT",
+  "entrypoint": "SKILL.md",
+  "keywords": [
+    "redes", "3d", "drawio", "svg", "github-pages", "visualizacion",
+    "topologia", "pdf", "docx", "sin-backend", "autocontenido"
+  ],
+  "capabilities": {
+    "visualizacion_3d": "assets/core/motor3d.js",
+    "codecs": "assets/core/codec.js",
+    "ingesta": "assets/core/ingesta.js",
+    "ui": "assets/core/ui.js",
+    "tema": "assets/theme/base.css"
+  },
+  "aplicaciones": [
+    {
+      "id": "explorador",
+      "nombre": "Explorador de Redes 3D",
+      "repo": "explorador-redes-3d",
+      "url": "https://mrcastillof.github.io/explorador-redes-3d/",
+      "base": "assets/app-explorador",
+      "build": "node scripts/build.mjs explorador"
+    },
+    {
+      "id": "lab",
+      "nombre": "Lab de Redes 3D",
+      "repo": "lab-redes-3d",
+      "url": "https://mrcastillof.github.io/lab-redes-3d/",
+      "base": "assets/app-labs",
+      "build": "node scripts/build.mjs lab"
+    }
+  ],
+  "commands": {
+    "build": "node scripts/build.mjs",
+    "verify": "node scripts/verify.mjs",
+    "scaffold": "node scripts/scaffold.mjs",
+    "test:codec": "node tests/codec.test.mjs",
+    "test:ingesta": "node tests/ingesta.test.mjs",
+    "test:smoke": "node tests/smoke.mjs"
+  },
+  "requirements": {
+    "node": ">=18",
+    "navegador": "Chrome/Edge/Firefox/Safari modernos (SVG + ResizeObserver + Pointer Events)",
+    "opcional": "Chrome o Edge instalado para tests/smoke.mjs"
+  },
+  "non_negotiables": [
+    "sin recursos externos (ni CDN ni fuentes remotas)",
+    "sin backend: todo ocurre en el navegador",
+    "un único index.html publicable por aplicación",
+    "no inventar topología: se deriva del .drawio o se avisa",
+    "accesibilidad con roles ARIA y prefers-reduced-motion"
+  ],
+  "docs": [
+    "docs/00-arquitectura.md",
+    "docs/01-repositorios.md",
+    "docs/02-flujo-insumos.md",
+    "docs/03-tecnologias.md",
+    "docs/04-despliegue-github-pages.md",
+    "docs/05-criterios-aceptacion.md",
+    "docs/06-informe-ejecutivo.md",
+    "docs/07-manual-uso.md"
+  ]
+}

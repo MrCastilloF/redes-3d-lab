@@ -1,0 +1,37 @@
+name: Verificar skill
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pruebas:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Preparar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Construir las dos aplicaciones
+        run: node scripts/build.mjs
+
+      - name: Pruebas de códec (inflate / zlib / ZIP)
+        run: node tests/codec.test.mjs
+
+      - name: Pruebas de ingesta (.drawio / .docx / .pdf / JSON)
+        run: node tests/ingesta.test.mjs
+
+      - name: Verificación estructural (autocontenido, a11y, tamaño)
+        run: node scripts/verify.mjs
+
+      - name: Prueba de humo en navegador real
+        run: node tests/smoke.mjs

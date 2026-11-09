@@ -1,0 +1,100 @@
+/* =====================================================================================================
+   lab.css — Estilos propios del Lab de Redes 3D.
+   ===================================================================================================== */
+
+.st1 { stop-color: #1c2b45; }
+.st2 { stop-color: #0c1524; }
+[data-theme="light"] .st1 { stop-color: #ffffff; }
+[data-theme="light"] .st2 { stop-color: #e3ecf9; }
+.stHalo { stop-color: rgba(139, 92, 246, 0.20); }
+[data-theme="light"] .stHalo { stop-color: rgba(124, 58, 237, 0.13); }
+
+/* ------------------------------------------------------------------ zona de soltar */
+.zona-soltar {
+  display: grid; place-items: center; gap: 6px;
+  padding: 34px 18px; text-align: center; cursor: pointer;
+  border: 1.5px dashed var(--borde-fuerte); border-radius: var(--radio);
+  background: radial-gradient(600px 200px at 50% 0%, rgba(139, 92, 246, 0.10), transparent 70%);
+  transition: border-color var(--vel), background var(--vel), transform var(--vel);
+}
+.zona-soltar:hover, .zona-soltar:focus-visible { border-color: var(--acento-2); background: rgba(139, 92, 246, 0.10); }
+.zona-soltar svg { width: 34px; height: 34px; color: var(--acento-2); opacity: 0.85; }
+.zona-soltar b { font-size: 14px; }
+.zona-soltar span { font-size: 11.5px; color: var(--texto-3); }
+
+.velo-arrastre {
+  position: absolute; inset: 0; z-index: 15; display: none;
+  place-items: center; text-align: center;
+  background: rgba(9, 14, 26, 0.72);
+  backdrop-filter: blur(4px);
+  border: 2px dashed var(--acento-2);
+  border-radius: 10px;
+  color: var(--texto);
+  pointer-events: none;
+}
+.zona-arrastre-activa .velo-arrastre { display: grid; }
+.velo-arrastre svg { width: 42px; height: 42px; color: var(--acento-2); margin-bottom: 10px; }
+.velo-arrastre p { margin: 0; font-size: 13px; font-weight: 600; }
+
+/* ------------------------------------------------------------------------ avisos */
+.aviso {
+  display: flex; gap: 9px; align-items: flex-start;
+  padding: 10px 12px; border-radius: var(--radio-sm);
+  border: 1px solid rgba(251, 191, 36, 0.34);
+  background: rgba(251, 191, 36, 0.09);
+  font-size: 12px; line-height: 1.5; color: var(--texto-2);
+}
+.aviso + .aviso { margin-top: 7px; }
+.aviso b { color: var(--texto); }
+.aviso--error { border-color: rgba(251, 113, 133, 0.4); background: rgba(251, 113, 133, 0.09); }
+
+/* ------------------------------------------------------------------- tabla mapeo */
+.mapeo { display: grid; gap: 8px; }
+.mapeo-fila {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 4px 10px; padding: 9px 11px; border-radius: 9px;
+  background: rgba(148, 178, 224, 0.055);
+  border: 1px solid var(--borde);
+}
+.mapeo-fila .n { font-size: 12px; font-weight: 600; }
+.mapeo-fila .d { font-size: 11px; color: var(--texto-3); grid-column: 1 / -1; }
+.mapeo-fila .et { font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.et--ok { color: var(--ok); }
+.et--warn { color: var(--alerta); }
+.et--error { color: var(--peligro); }
+
+/* ---------------------------------------------------------------------- galería */
+.galeria { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+.galeria figure { margin: 0; border-radius: 10px; overflow: hidden; border: 1px solid var(--borde); background: rgba(148, 178, 224, 0.06); }
+.galeria img { display: block; width: 100%; height: 90px; object-fit: cover; background: #0b1220; }
+.galeria figcaption { padding: 6px 8px; font-size: 10.5px; color: var(--texto-3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ------------------------------------------------------------------ evidencias */
+.evidencia {
+  padding: 9px 11px; border-radius: 9px; margin-bottom: 7px;
+  border-left: 2px solid var(--acento-2);
+  background: rgba(139, 92, 246, 0.08);
+  font-size: 12px; line-height: 1.5; color: var(--texto-2);
+}
+.evidencia .fuente { display: block; font-size: 10px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--texto-3); margin-bottom: 3px; }
+.evidencia mark { background: rgba(56, 189, 248, 0.24); color: inherit; border-radius: 3px; padding: 0 2px; }
+
+/* --------------------------------------------------------------------- simulación */
+#sim-caja .form-fila { gap: 8px; }
+#sim-caja label { flex: 1 1 120px; }
+#sim-caja select { width: 100%; }
+.ruta { margin-top: 10px; }
+
+/* Tabla de saltos compacta dentro del inspector */
+#sim-detalle table.tabla { font-size: 11px; }
+#sim-detalle table.tabla th, #sim-detalle table.tabla td { padding: 6px 7px; }
+#sim-detalle table.tabla th { font-size: 9.5px; letter-spacing: 0.04em; }
+
+/* ------------------------------------------------------------------- responsive */
+@media (max-width: 1080px) {
+  .inspector { max-height: 50vh; }
+}
+@media (max-width: 720px) {
+  .hud .kpis { display: none; }
+  .zona-soltar { padding: 22px 12px; }
+}

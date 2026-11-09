@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<meta name="theme-color" content="#05080f">
+<title>Lab de Redes 3D · escenarios desde .drawio, PDF y Word</title>
+<meta name="description" content="Laboratorio de redes en 3D: convierte archivos .drawio, documentos, PDF e imágenes en un escenario navegable. Sin backend, sin dependencias.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%238b5cf6'/%3E%3Cpath d='M8 24h16M11 24v-7h10v7M16 17v-5m-3 0h6' stroke='%2304121e' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>/* @@INLINE:theme/base.css@@ */</style>
+<style>/* @@INLINE:app-labs/lab.css@@ */</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="barra">
+    <div class="marca">
+      <div class="marca-logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M4 20h16M7 20v-6h10v6M12 14V8m-3 0h6"/><circle cx="12" cy="5" r="2"/>
+        </svg>
+      </div>
+      <div class="marca-txt">
+        <h1 class="marca-titulo">Lab de Redes <span style="color:var(--acento-2)">3D</span></h1>
+        <div class="marca-sub">del archivo al escenario navegable · .drawio · PDF · Word · imágenes</div>
+      </div>
+    </div>
+
+    <nav class="pestanas" role="tablist" aria-label="Secciones">
+      <button class="pestana" role="tab" id="tab-escenario" aria-controls="vista-escenario" aria-selected="true">Escenario</button>
+      <button class="pestana" role="tab" id="tab-insumos" aria-controls="vista-insumos" aria-selected="false">Insumos</button>
+      <button class="pestana" role="tab" id="tab-evidencias" aria-controls="vista-evidencias" aria-selected="false">Evidencias</button>
+    </nav>
+
+    <div class="barra-fin">
+      <label class="solo-lector" for="sel-escena">Escena</label>
+      <select class="campo" id="sel-escena" title="Escena del insumo"></select>
+      <button class="btn" id="btn-cargar" title="Cargar archivos (.drawio, .pdf, .docx, .txt, .json, imágenes)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 16V4m-4 4 4-4 4 4"/><path d="M4 16v3h16v-3"/></svg>
+        Cargar
+      </button>
+      <button class="btn btn--icono" id="btn-tema" aria-pressed="false" title="Cambiar de tema" aria-label="Cambiar de tema">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A8.5 8.5 0 1 1 11.2 3a6.6 6.6 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <input type="file" id="archivos" multiple hidden accept=".drawio,.dio,.xml,.pdf,.docx,.txt,.md,.csv,.json,.png,.jpg,.jpeg,.webp,.svg">
+    </div>
+  </header>
+
+  <main>
+    <!-- ================================================================ escenario -->
+    <section class="vista vista--topologia" id="vista-escenario" role="tabpanel" aria-labelledby="tab-escenario">
+      <div class="lienzo" id="zona-arrastre">
+        <svg id="lab" role="application" aria-label="Escenario de red en 3D. Arrastra para orbitar y usa las flechas para girar." tabindex="0">
+          <defs>
+            <linearGradient id="gCartel" x1="0" y1="0" x2="0.55" y2="1">
+              <stop offset="0" class="st1"/>
+              <stop offset="1" class="st2"/>
+            </linearGradient>
+            <radialGradient id="gSombra">
+              <stop offset="0" stop-color="#000" stop-opacity="0.62"/>
+              <stop offset="1" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="gHalos">
+              <stop offset="0" class="stHalo"/>
+              <stop offset="1" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="fGlow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="3.4"/>
+            </filter>
+          </defs>
+        </svg>
+
+        <div class="hud">
+          <div class="titulo-flotante">
+            <h2 id="hud-titulo">Escenario</h2>
+            <p id="hud-desc">Carga un .drawio para construir la topología, o adjunta documentos para reunir evidencias.</p>
+            <div class="kpis" id="hud-kpis"></div>
+            <p class="pista">Arrastra archivos aquí · arrastra el lienzo para orbitar · rueda para acercar · clic en un nodo para inspeccionarlo</p>
+          </div>
+
+          <div class="hud-pie">
+            <div class="leyenda" id="leyenda"></div>
+            <div class="controles">
+              <div class="seg" role="group" aria-label="Punto de vista">
+                <button data-preset="iso" aria-pressed="true">Iso</button>
+                <button data-preset="frontal" aria-pressed="false">Frente</button>
+                <button data-preset="cenital" aria-pressed="false">Cenital</button>
+              </div>
+              <button class="btn" id="btn-ajustar" title="Encuadrar todo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 15v5h-5M20 9V4h-5M4 15v5h5"/></svg>
+                Ajustar
+              </button>
+              <button class="btn" id="btn-girar" aria-pressed="false" title="Rotación automática">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v5h-5"/></svg>
+                Girar
+              </button>
+              <button class="btn" id="btn-exportar" title="Descargar la escena como JSON">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v12m-4-4 4 4 4-4"/><path d="M4 18v2h16v-2"/></svg>
+                Exportar
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="velo-arrastre" id="velo-arrastre" aria-hidden="true">
+          <div>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 16V4m-4 4 4-4 4 4"/><path d="M4 16v3h16v-3"/></svg>
+            <p>Suelta los archivos para construir el escenario</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="inspector" id="inspector" aria-live="polite" aria-label="Detalles y simulación"></aside>
+    </section>
+
+    <!-- ================================================================== insumos -->
+    <section class="vista" id="vista-insumos" role="tabpanel" aria-labelledby="tab-insumos" hidden>
+      <div class="seccion">
+        <div class="seccion-cab">
+          <div>
+            <h2>Insumos del laboratorio</h2>
+            <p>Todo se procesa en tu navegador: ningún archivo se sube a un servidor. Formatos: .drawio, .pdf, .docx, .txt, .md, .csv, .json e imágenes.</p>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn" id="btn-vaciar" title="Empezar de cero">Vaciar</button>
+            <button class="btn btn--acento" id="btn-cargar-2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 16V4m-4 4 4-4 4 4"/><path d="M4 16v3h16v-3"/></svg>
+              Añadir archivos
+            </button>
+          </div>
+        </div>
+
+        <div class="zona-soltar" id="zona-soltar" tabindex="0" role="button" aria-label="Soltar archivos o pulsar para elegirlos">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V4m-4 4 4-4 4 4"/><path d="M4 16v3h16v-3"/></svg>
+          <b>Arrastra tus archivos aquí</b>
+          <span>o pulsa para elegirlos · .drawio, .pdf, .docx, .txt, .csv, .json, imágenes</span>
+        </div>
+
+        <div id="avisos"></div>
+
+        <div class="rejilla">
+          <div class="tarjeta">
+            <h3>Archivos procesados</h3>
+            <div class="tabla-envoltura">
+              <table class="tabla">
+                <thead><tr><th>Archivo</th><th>Tipo</th><th>Resultado</th><th>Tamaño</th></tr></thead>
+                <tbody id="lista-fuentes"><tr><td colspan="4" class="vacio">Todavía no has cargado archivos.</td></tr></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="tarjeta">
+            <h3>Cómo se interpretó cada archivo</h3>
+            <div id="tabla-mapeo"></div>
+          </div>
+        </div>
+
+        <div class="tarjeta">
+          <h3>Escenas detectadas</h3>
+          <div class="chips" id="chips-escenas"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================================== evidencias -->
+    <section class="vista" id="vista-evidencias" role="tabpanel" aria-labelledby="tab-evidencias" hidden>
+      <div class="seccion">
+        <div class="seccion-cab">
+          <div>
+            <h2>Evidencias y datos extraídos</h2>
+            <p>Direcciones, VLANs y redes encontradas en los documentos, con su contexto. Se usan para justificar cada nodo del escenario.</p>
+          </div>
+          <div class="chips" id="ev-chips"></div>
+        </div>
+
+        <div class="rejilla">
+          <div class="tarjeta">
+            <h3>Direcciones IP documentadas</h3>
+            <div class="tabla-envoltura"><table class="tabla">
+              <thead><tr><th>IP</th><th>Archivo</th><th>Contexto</th></tr></thead>
+              <tbody id="inv-ips"></tbody>
+            </table></div>
+          </div>
+          <div class="tarjeta">
+            <h3>VLANs y redes</h3>
+            <div id="inv-vlan"></div>
+          </div>
+        </div>
+
+        <div class="rejilla">
+          <div class="tarjeta">
+            <h3>Documentos procesados</h3>
+            <div class="acordeon" id="lista-docs"></div>
+          </div>
+          <div class="tarjeta">
+            <h3>Imágenes adjuntas</h3>
+            <div class="galeria" id="galeria"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="carga oculto" id="carga"><div class="carga-caja"><div class="anillo"></div><div id="carga-texto">Procesando insumos…</div></div></div>
+
+<noscript><div style="padding:24px;font-family:system-ui">Esta aplicación necesita JavaScript y funciona sin servidor: los archivos se procesan en tu navegador.</div></noscript>
+
+<script>/* @@INLINE:core/codec.js@@ */</script>
+<script>/* @@INLINE:core/motor3d.js@@ */</script>
+<script>/* @@INLINE:core/ui.js@@ */</script>
+<script>/* @@INLINE:core/ingesta.js@@ */</script>
+<script>/* @@INLINE:app-labs/ejemplo.js@@ */</script>
+<script>/* @@INLINE:app-labs/app.js@@ */</script>
+</body>
+</html>

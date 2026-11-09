@@ -1,0 +1,10 @@
+INVENTARIO DE RED · EJEMPLO DE DEMOSTRACIÓN
+
+Perímetro: el FortiGate 200G (10.10.99.1) es la puerta de enlace y aplica las políticas entre VLANs.
+El enlace con el proveedor usa la red 203.0.113.0/30 y el Router ISP 203.0.113.1.
+Núcleo: Core FS-148F (10.10.99.11) concentra los troncales 802.1Q hacia los dos edificios.
+Edificio A: Switch A · Oficinas (10.10.99.12) atiende la VLAN 10 con el PC Rectoría 10.10.10.21 y el PC Contabilidad 10.10.10.22.
+La VLAN 40 se reserva para el Teléfono IP · Voz con PoE y prioridad QoS.
+Edificio B: Switch B · Aulas (10.10.99.13) alimenta el AP Wi-Fi Aulas por PoE en la VLAN 30 y la Cámara CCTV en la VLAN 50.
+Servidores: el equipo Servidores DNS/DHCP 10.10.60.10 centraliza el DHCP y el DNS de todas las VLANs.
+Gestión: la VLAN 99 (10.10.99.0/24) agrupa firewall, conmutadores y puntos de acceso.

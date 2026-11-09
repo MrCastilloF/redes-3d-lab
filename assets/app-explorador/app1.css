@@ -1,0 +1,52 @@
+/* =====================================================================================================
+   app1.css — Ajustes propios del Explorador de Redes 3D.
+   ===================================================================================================== */
+
+/* Paradas de gradiente del motor (usan variables del tema) */
+.st1 { stop-color: #1c2b45; }
+.st2 { stop-color: #0c1524; }
+[data-theme="light"] .st1 { stop-color: #ffffff; }
+[data-theme="light"] .st2 { stop-color: #e3ecf9; }
+.stHalo { stop-color: rgba(56, 189, 248, 0.20); }
+[data-theme="light"] .stHalo { stop-color: rgba(2, 132, 199, 0.14); }
+
+/* Catálogo + detalle de protocolos */
+.rejilla--protos { grid-template-columns: minmax(232px, 320px) minmax(0, 1fr); align-items: start; }
+@media (max-width: 860px) { .rejilla--protos { grid-template-columns: 1fr; } }
+
+#proto-detalle .cab-detalle { margin-bottom: 12px; }
+#proto-detalle .analogia {
+  font-size: 12.5px; line-height: 1.6; color: var(--texto-2);
+  padding: 11px 13px; border-radius: var(--radio-sm);
+  border: 1px dashed var(--borde-fuerte);
+  background: rgba(139, 92, 246, 0.07);
+  margin: 12px 0;
+}
+#proto-detalle .analogia b { color: var(--texto); }
+#proto-detalle .cabeceras { display: grid; gap: 4px; margin-top: 10px; }
+#proto-detalle .cabeceras div {
+  display: grid; grid-template-columns: 128px 1fr; gap: 8px;
+  font-size: 11.5px; padding: 6px 8px; border-radius: 7px;
+  background: rgba(148, 178, 224, 0.06);
+}
+#proto-detalle .cabeceras .k { color: var(--texto-3); font-family: var(--mono); font-size: 10.5px; }
+
+/* Calculadora de subred */
+#calc-resultado { margin-top: 14px; }
+#calc-resultado .ficha { border-color: var(--borde-fuerte); }
+#calc-resultado .ficha > div { grid-template-columns: 116px 1fr; }
+
+/* Tabla de equipos: resalta la VLAN con un punto de color */
+.pt-vlan { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+
+/* Ruta de simulación: separación clara entre saltos */
+.ruta .flecha { opacity: 0.55; }
+.ruta .salto.es-router { border-color: rgba(56, 189, 248, 0.5); background: rgba(56, 189, 248, 0.12); }
+.ruta .salto.es-destino { border-color: rgba(52, 211, 153, 0.55); background: rgba(52, 211, 153, 0.12); }
+
+/* Tarjetas de KPI algo más compactas en pantallas pequeñas */
+@media (max-width: 720px) {
+  .kpis { gap: 4px; }
+  .kpi { padding: 4px 7px; font-size: 10px; }
+  .controles { gap: 4px; }
+}
