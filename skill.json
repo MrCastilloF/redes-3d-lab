@@ -6,8 +6,17 @@
   "license": "MIT",
   "entrypoint": "SKILL.md",
   "keywords": [
-    "redes", "3d", "drawio", "svg", "github-pages", "visualizacion",
-    "topologia", "pdf", "docx", "sin-backend", "autocontenido"
+    "redes",
+    "3d",
+    "drawio",
+    "svg",
+    "github-pages",
+    "visualizacion",
+    "topologia",
+    "pdf",
+    "docx",
+    "sin-backend",
+    "autocontenido"
   ],
   "capabilities": {
     "visualizacion_3d": "assets/core/motor3d.js",
@@ -23,7 +32,8 @@
       "repo": "explorador-redes-3d",
       "url": "https://mrcastillof.github.io/explorador-redes-3d/",
       "base": "assets/app-explorador",
-      "build": "node scripts/build.mjs explorador"
+      "build": "node scripts/build.mjs explorador",
+      "repo_url": "https://github.com/MrCastilloF/explorador-redes-3d"
     },
     {
       "id": "lab",
@@ -31,7 +41,8 @@
       "repo": "lab-redes-3d",
       "url": "https://mrcastillof.github.io/lab-redes-3d/",
       "base": "assets/app-labs",
-      "build": "node scripts/build.mjs lab"
+      "build": "node scripts/build.mjs lab",
+      "repo_url": "https://github.com/MrCastilloF/lab-redes-3d"
     }
   ],
   "commands": {
@@ -63,5 +74,7 @@
     "docs/05-criterios-aceptacion.md",
     "docs/06-informe-ejecutivo.md",
     "docs/07-manual-uso.md"
-  ]
+  ],
+  "repositorio": "https://github.com/MrCastilloF/redes-3d-lab",
+  "estado": "publicado y verificado: Pages en modo GitHub Actions, HTML servido idéntico al build local"
 }
