@@ -57,6 +57,7 @@ const OBLIGATORIOS = [
   "assets/app-explorador/template.html", "assets/app-explorador/app.js", "assets/app-explorador/datos.js",
   "assets/app-labs/template.html", "assets/app-labs/app.js", "assets/app-labs/ejemplo.js",
   "assets/deploy/pages.yml", "assets/deploy/README-explorador.md", "assets/deploy/README-lab.md",
+  "assets/deploy/LICENSE", "LICENSE", ".github/workflows/verify.yml", ".gitignore",
   "scripts/build.mjs", "scripts/verify.mjs", "scripts/scaffold.mjs",
   "tests/codec.test.mjs", "tests/ingesta.test.mjs", "tests/smoke.mjs",
   "docs/00-arquitectura.md", "docs/01-repositorios.md", "docs/02-flujo-insumos.md",
