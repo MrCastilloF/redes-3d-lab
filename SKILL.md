@@ -10,7 +10,7 @@ compilación obligatorio**: cada aplicación se publica como un único `index.ht
 
 | Aplicación | Repositorio | Qué resuelve |
 |---|---|---|
-| Explorador de Redes 3D | `explorador-redes-3d` | Mejora visual 3D del explorador dellabs_redes_test: topología, direccionamiento, protocolos, simulación y glosario. Mismos datos que la versión anterior. |
+| Explorador de Redes 3D | `explorador-redes-3d` | Mejora visual 3D del explorador de labs_redes_test: topología, direccionamiento, protocolos, simulación y glosario. Mismos datos que la versión anterior. |
 | Lab de Redes 3D | `lab-redes-3d` | Convierte `.drawio`, `.pdf`, `.docx`, texto e imágenes en un escenario 3D navegable con evidencias citadas y simulación. |
 
 ## Cuándo usar este skill

@@ -5,7 +5,7 @@ autocontenidas**: un solo `index.html`, sin backend, sin dependencias y desplega
 
 Nace de dos encargos concretos:
 
-1. una versión 3D de alto impacto visual del explorador de redes dellabs_redes_test
+1. una versión 3D de alto impacto visual del explorador de redes de labs_redes_test
    ([versión anterior](https://mrcastillof.github.io/explorador-de-redes/3d.html));
 2. una aplicación nueva que convierta `.drawio`, PDF, Word, texto e imágenes en un escenario 3D navegable.
 
@@ -100,4 +100,4 @@ scripts/verify.mjs        24/24   sin recursos externos, sin BOM, a11y, tamaño,
 
 ## Licencia
 
-MIT. El modelo de datos y los textos de red pertenecen a la labs_redes_test.
+MIT. El modelo de datos y los textos de red pertenecen a labs_redes_test.
